@@ -28,7 +28,7 @@ class CustomTopo(Topo):
         Topo.__init__(self, **opts)
         # Add your logic here ...
 
-        self.k = 1
+        self.k = 4
 
         lastSwitch = None
 
@@ -37,24 +37,24 @@ class CustomTopo(Topo):
         switches["switch"+str(root)] = self.addSwitch('s%s' % root)
 
 
-        for i in range(1, fanout+1):
+        for i in range(0, fanout):
             switches["switch"+str(i)] = self.addSwitch('s%s' % str(i))
 
 
-        host1 = self.addHost('h%s' % 1, cpu=.5/2)
-        host2 = self.addHost('h%s' % 2, cpu=.5/2)
-        host3 = self.addHost('h%s' % 3, cpu=.5/2)
-        host4 = self.addHost('h%s' % 4, cpu=.5/2)
-        # 10 Mbps, 5ms delay, 1% loss, 1000 packet queue
-        
-        for i in range(1, fanout+1):
+        for i in range(0, self.k):
+            hosts["host"+str(i)] = self.addHost('h%s' % str(i), cpu=.5/2)
+
+    
+        for i in range(1, fanout):
             self.addLink(switches["switch"+str(root)], switches["switch"+str(i)], bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
 
 
-        self.addLink(switches["switch"+str(1)], host1, bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
-        self.addLink(switches["switch"+str(1)], host2, bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
-        self.addLink(switches["switch"+str(2)], host3, bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
-        self.addLink(switches["switch"+str(2)], host4, bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
+        for i in range(1, fanout):
+            for j in range(0, self.k):
+                self.addLink(switches["switch"+str(i)], hosts["hosts"+str(j)], bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
+
+
+
 
         
         
