@@ -1,0 +1,5 @@
+The BST is basically a skeleton for SDN datacenter network.
+
+It consists of BST, and Node classes.
+
+It will be called in CustomTopo.py
