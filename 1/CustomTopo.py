@@ -33,6 +33,7 @@ class CustomTopo(Topo):
         lastSwitch = None
 
         switches = {}
+        hosts = {}
         root = 0
         switches["switch"+str(root)] = self.addSwitch('s%s' % root)
 
@@ -51,7 +52,8 @@ class CustomTopo(Topo):
 
         for i in range(1, fanout):
             for j in range(0, self.k):
-                self.addLink(switches["switch"+str(i)], hosts["hosts"+str(j)], bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
+                print i, j
+                #self.addLink(switches["switch"+str(i)], hosts["hosts"+str(j)], bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
 
 
 
