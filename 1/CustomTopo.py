@@ -35,13 +35,16 @@ class CustomTopo(Topo):
         switches = {}
         hosts = {}
         root = 0
-        values = 0
-        """
+        values_of_hosts = 0
+        values_of_switches_layer_1 = 0
+        values_of_switches_layer_2 = 0
+
         switches["switch"+str(root)] = self.addSwitch('s%s' % root)
 
         
         for i in range(1, fanout+1):
             switches["switch"+str(i)] = self.addSwitch('s%s' % str(i))
+            
 
         for i in range(0, self.k):
             hosts["host"+str(i)] = self.addHost('h%s' % str(i), cpu=.5/2)
@@ -50,18 +53,17 @@ class CustomTopo(Topo):
         #print hosts.values()
             
         for i in range(1, fanout+1):
-            self.addLink(switches["switch"+str(root)], switches["switch"+str(i)], bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
+            self.addLink(switches["switch"+str(root)], switches["switch"+str(values_of_switches_layer_1)], bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
+            values_of_switches_layer_1+=1
 
-        
+
+        for i in range(1, fanout+1):
+            
         for i in range(1, fanout+1):
             for j in range(0, fanout):
-                self.addLink(switches["switch"+str(i)], hosts["host"+str(values)], bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
-                values+=1
-
-                
-        """
-
-
+                self.addLink(switches["switch"+str(i)], hosts["host"+str(values_of_hosts)], bw=10, delay='5ms', loss=1, max_queue_size=1000, use_htb=True)
+                values_of_hosts+=1
+          
         
         
         
