@@ -56,9 +56,6 @@ class CustomTopo(Topo):
         for i in range(0, self.k):
             hosts["host"+str(i)] = self.addHost('h%s' % str(i), cpu=.5/2)
             
-        #print hosts.keys()
-        #print hosts.values()
-            
 
         for i in range(fanout+1, values_of_switches_layer_2):
             for j in range(0, fanout):
